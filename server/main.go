@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 	"net"
-	//"time"
 
 	pb "github.com/iuketaylor/grpc_programmes/proto"
 	"google.golang.org/grpc"
@@ -19,7 +18,6 @@ type server struct {
 
 func (s *server) GetProgramme(ctx context.Context, req *pb.GetProgrammeRequest) (*pb.Programme, error) {
 	log.Printf("Received request for PID %s", req.Pid)
-
 	var mockDatabase = map[string]*pb.Programme{
 		"b006m86d": {
 			Id:    "b006m86d",
@@ -43,8 +41,6 @@ func (s *server) GetProgramme(ctx context.Context, req *pb.GetProgrammeRequest) 
 		},
 	}
 
-	//	time.Sleep(50 * time.Millisecond)
-
 	programme, ok := mockDatabase[req.Pid]
 	if !ok {
 		return nil, status.Errorf(codes.NotFound, "Programme not found %s", req.Pid)
@@ -58,7 +54,6 @@ func main() {
 	s := grpc.NewServer()
 	pb.RegisterProgrammeServiceServer(s, &server{})
 
-	// enabling this so I can use grpcurl
 	reflection.Register(s)
 
 	lis, err := net.Listen("tcp", ":5001")
