@@ -1,0 +1,25 @@
+syntax = "proto3";
+package programme;
+
+option go_package = "github.com/iuketaylor/grpc_programmes/proto";
+
+service ProgrammeService {
+  rpc GetProgramme(GetProgrammeRequest) returns (Programme) {}
+}
+
+message GetProgrammeRequest {
+  string pid = 1;
+}
+
+message Programme {
+  string id = 1;
+  bool live = 2;
+  string type = 3;
+  string title = 4;
+  Image images = 5;
+}
+
+message Image {
+  string type = 1;
+  string standard = 2;
+}
